@@ -40,7 +40,7 @@ const RoomsPage = () => {
     <div className="flex flex-col min-h-screen">
       <Header />
       <main className="flex-grow">
-        {/* Hero Section */}
+        {/* Page banner */}
         <section className="relative h-[400px]">
           {/* Background Image */}
           <div

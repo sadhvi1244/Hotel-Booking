@@ -183,7 +183,7 @@ const ContactPage = () => {
       <Header />
       <main className="flex-grow">
         {/* Page Banner */}
-        <section className="relative h-[300px] md:h-[400px]">
+        <section className="relative h-[400px] md:h-[400px]">
           <div
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
             style={{
