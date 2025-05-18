@@ -20,7 +20,7 @@ const offers = [
   {
     id: 3,
     title: "Buy One Get One Free",
-    image: room2,
+    image: room3,
   },
 ];
 

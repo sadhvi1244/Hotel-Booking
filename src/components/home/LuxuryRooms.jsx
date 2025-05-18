@@ -1,13 +1,16 @@
 import { motion } from "framer-motion";
 import { Wifi, Users, Bed } from "lucide-react";
 import { Link } from "react-router-dom";
+import room1 from "../../assets/room-service1.png";
+import room2 from "../../assets/room-service2.png";
+import room3 from "../../assets/room-service3.png";
 
 const rooms = [
   {
     id: 1,
     title: "Deluxe Room",
     price: 150,
-    image: "/src/assets/room-service1.png",
+    image: room1,
     persons: "1-2 Persons",
     bed: "King Size Bed",
     wifi: "Free Wifi",
@@ -17,7 +20,7 @@ const rooms = [
     id: 2,
     title: "Executive Room",
     price: 250,
-    image: "/src/assets/room-service2.png",
+    image: room2,
     persons: "1-2 Persons",
     bed: "King Size Bed",
     wifi: "Free Wifi",
@@ -27,7 +30,7 @@ const rooms = [
     id: 3,
     title: "Suite Room",
     price: 550,
-    image: "/src/assets/room-service3.png",
+    image: room3,
     persons: "1-2 Persons",
     bed: "King Size Bed",
     wifi: "Free Wifi",
