@@ -1,18 +1,20 @@
 import { Link } from "react-router-dom";
 import design from "/src/assets/desing.png";
-
+import event1 from "../../assets/event1.png";
+import event2 from "../../assets/event2.png";
+import event3 from "../../assets/event3.png";
 const blogPosts = [
   {
     id: 1,
     title: "Advantages of Offering Online Registration at Your Hotel",
-    image: "/src/assets/event1.png",
+    image: event1,
     date: "May 15, 2025",
     author: "Relax Zone",
   },
   {
     id: 2,
     title: "Our Health Club is Now Available for Your Fitness Needs",
-    image: "/src/assets/event2.png",
+    image: event2,
     date: "May 15, 2025",
     author: "Royal Suite",
   },
@@ -20,7 +22,7 @@ const blogPosts = [
     id: 3,
     title: "Restoring the Lighting Design in the Hotel",
 
-    image: "/src/assets/event3.png",
+    image: event3,
     date: "Oct 20, 2025",
     author: "Apartments",
   },

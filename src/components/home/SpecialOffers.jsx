@@ -2,21 +2,25 @@ import React, { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import design from "/src/assets/desing.png";
+import room1 from "../../assets/room-service1.png";
+import room2 from "../../assets/room-service2.png";
+import room3 from "../../assets/room-service3.png";
+
 const offers = [
   {
     id: 1,
     title: "Family Discount",
-    image: "/src/assets/room-service1.png",
+    image: room1,
   },
   {
     id: 2,
     title: "Couples offer",
-    image: "/src/assets/room-service2.png",
+    image: room2,
   },
   {
     id: 3,
     title: "Buy One Get One Free",
-    image: "/src/assets/room-service3.png",
+    image: room2,
   },
 ];
 

@@ -3,7 +3,7 @@ import { Button } from "../../components/ui/Button";
 import { motion } from "framer-motion";
 import design from "/src/assets/desing.png";
 import { Link } from "react-router-dom";
-
+import Component from "../../assets/Component1.png";
 const OutdoorActivities = () => {
   const features = [
     {
@@ -158,7 +158,7 @@ const OutdoorActivities = () => {
           >
             <div className="relative w-full aspect-[4/5] lg:aspect-[4/4]  overflow-hidden  px-3">
               <img
-                src="/src/assets/Component1.png"
+                src={Component}
                 alt="Hotel interior"
                 className="absolute inset-0 w-full h-full object-cover object-center"
                 loading="lazy"
