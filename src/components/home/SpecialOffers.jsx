@@ -6,17 +6,17 @@ const offers = [
   {
     id: 1,
     title: "Family Discount",
-    image: "/src/assets/room-service1-1.jpg.png",
+    image: "/src/assets/room-service1.png",
   },
   {
     id: 2,
     title: "Couples offer",
-    image: "/src/assets/room-service1-2.jpg.png",
+    image: "/src/assets/room-service2.png",
   },
   {
     id: 3,
     title: "Buy One Get One Free",
-    image: "/src/assets/room-service1-3.jpg.png",
+    image: "/src/assets/room-service3.png",
   },
 ];
 

@@ -44,7 +44,10 @@ const ReceiptPopup = ({ data, onClose }) => {
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
-    link.download = `Reservation_${data.name}_${Date.now()}.txt`;
+    link.download = `Reservation_${data.name.replace(
+      / /g,
+      "_"
+    )}_${Date.now()}.txt`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -53,10 +56,11 @@ const ReceiptPopup = ({ data, onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50 animate-fade-in">
-      <div className="bg-white  p-6 md:p-8 max-w-md w-full relative animate-slide-up">
+      <div className="bg-white p-6 md:p-8 max-w-md w-full relative animate-slide-up">
         <button
           onClick={onClose}
           className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 transition-colors"
+          aria-label="Close receipt"
         >
           <X className="h-6 w-6" />
         </button>
@@ -144,6 +148,8 @@ const ContactPage = () => {
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [showCheckIn, setShowCheckIn] = useState(false);
+  const [showCheckOut, setShowCheckOut] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -151,9 +157,11 @@ const ContactPage = () => {
   };
 
   const validateForm = () => {
+    const phoneRegex =
+      /^[+]?[(]?[0-9]{1,4}[)]?[-\s.]?[0-9]{1,3}[-\s.]?[0-9]{4,6}$/;
     return (
-      formData.name &&
-      formData.phone &&
+      formData.name.trim() &&
+      phoneRegex.test(formData.phone) &&
       formData.checkIn &&
       formData.checkOut &&
       formData.guests &&
@@ -167,19 +175,24 @@ const ContactPage = () => {
     setIsLoading(true);
 
     if (!validateForm()) {
-      alert("Please fill in all required fields");
+      alert("Please fill in all required fields correctly");
       setIsLoading(false);
       return;
     }
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    setIsSubmitted(true);
-    setIsLoading(false);
+    try {
+      // Simulate API call
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      setIsSubmitted(true);
+    } catch (error) {
+      alert("Error submitting form. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen overflow-hidden">
       <Header />
       <main className="flex-grow">
         {/* Page Banner */}
@@ -191,7 +204,6 @@ const ContactPage = () => {
                 "url('https://images.unsplash.com/photo-1561501900-3701fa6a0864?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80')",
             }}
           >
-            {/* ✅ Top-to-bottom gradient overlay */}
             <div className="absolute inset-0 bg-gradient-to-b from-black via-black/60 to-transparent"></div>
           </div>
           <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
@@ -238,6 +250,7 @@ const ContactPage = () => {
                       placeholder="Full Name"
                       className="bg-[#F2F2F2] border-0 h-14 text-base pl-12 pr-6 rounded-none"
                       required
+                      aria-label="Full Name"
                     />
                     <Users className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-[#AE7D54]" />
                   </div>
@@ -250,8 +263,10 @@ const ContactPage = () => {
                       value={formData.phone}
                       onChange={handleInputChange}
                       placeholder="Phone Number"
+                      pattern="[+]?[(]?[0-9]{1,4}[)]?[-\s.]?[0-9]{1,3}[-\s.]?[0-9]{4,6}"
                       className="bg-[#F2F2F2] border-0 h-14 text-base pl-12 pr-6 rounded-none"
                       required
+                      aria-label="Phone Number"
                     />
                     <Phone className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-[#AE7D54]" />
                   </div>
@@ -261,24 +276,36 @@ const ContactPage = () => {
                 <div className="grid md:grid-cols-2 gap-4">
                   <div className="relative">
                     <Input
-                      type="date"
+                      type={showCheckIn ? "date" : "text"}
                       name="checkIn"
                       value={formData.checkIn}
                       onChange={handleInputChange}
+                      placeholder="Check-in"
+                      onFocus={() => setShowCheckIn(true)}
+                      onBlur={(e) => {
+                        if (!e.target.value) setShowCheckIn(false);
+                      }}
                       className="bg-[#F2F2F2] border-0 h-14 text-base pl-12 pr-6 rounded-none"
                       required
+                      aria-label="Check-in Date"
                     />
                     <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-[#AE7D54]" />
                   </div>
 
                   <div className="relative">
                     <Input
-                      type="date"
+                      type={showCheckOut ? "date" : "text"}
                       name="checkOut"
                       value={formData.checkOut}
                       onChange={handleInputChange}
+                      placeholder="Check-out"
+                      onFocus={() => setShowCheckOut(true)}
+                      onBlur={(e) => {
+                        if (!e.target.value) setShowCheckOut(false);
+                      }}
                       className="bg-[#F2F2F2] border-0 h-14 text-base pl-12 pr-6 rounded-none"
                       required
+                      aria-label="Check-out Date"
                     />
                     <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-[#AE7D54]" />
                   </div>
@@ -296,6 +323,7 @@ const ContactPage = () => {
                       min="1"
                       className="bg-[#F2F2F2] border-0 h-14 text-base pl-12 pr-6 rounded-none"
                       required
+                      aria-label="Number of Guests"
                     />
                     <Users className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-[#AE7D54]" />
                   </div>
@@ -305,8 +333,9 @@ const ContactPage = () => {
                       name="roomType"
                       value={formData.roomType}
                       onChange={handleInputChange}
-                      className="w-full bg-[#F2F2F2] border-0 h-14 text-base pl-12 pr-10 appearance-none rounded-none"
+                      className="w-full bg-[#F2F2F2] border-0 h-14 text-base pl-12 pr-10 appearance-none rounded-none cursor-pointer"
                       required
+                      aria-label="Room Type"
                     >
                       {roomTypes.map((type) => (
                         <option key={type} value={type}>
@@ -315,6 +344,15 @@ const ContactPage = () => {
                       ))}
                     </select>
                     <Building className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-[#AE7D54]" />
+                    <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
+                      <svg
+                        className="w-4 h-4"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+                      </svg>
+                    </div>
                   </div>
                 </div>
 
@@ -324,8 +362,9 @@ const ContactPage = () => {
                     name="mealPlan"
                     value={formData.mealPlan}
                     onChange={handleInputChange}
-                    className="w-full bg-[#F2F2F2] border-0 h-14 text-base pl-12 pr-10 appearance-none rounded-none"
+                    className="w-full bg-[#F2F2F2] border-0 h-14 text-base pl-12 pr-10 appearance-none rounded-none cursor-pointer"
                     required
+                    aria-label="Meal Plan"
                   >
                     {mealPlans.map((plan) => (
                       <option key={plan} value={plan}>
@@ -334,6 +373,15 @@ const ContactPage = () => {
                     ))}
                   </select>
                   <UtensilsCrossed className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-[#AE7D54]" />
+                  <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
+                    <svg
+                      className="w-4 h-4"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+                    </svg>
+                  </div>
                 </div>
 
                 {/* Special Request */}
@@ -343,6 +391,7 @@ const ContactPage = () => {
                   onChange={handleInputChange}
                   placeholder="Special Requests"
                   className="bg-[#F2F2F2] border-0 min-h-[150px] text-base p-6 rounded-none"
+                  aria-label="Special Requests"
                 />
 
                 {/* Submit Button */}
@@ -352,6 +401,7 @@ const ContactPage = () => {
                   disabled={isLoading}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
+                  aria-label="Submit reservation"
                 >
                   {isLoading ? "Processing..." : "SUBMIT"}
                 </motion.button>
@@ -379,8 +429,8 @@ const ContactPage = () => {
               <div className="space-y-8">
                 {/* Phone */}
                 <div className="flex items-start gap-6">
-                  <div className="bg-[#FDECE3] hover:bg-[#9a6b43] p-6 flex items-center justify-center group">
-                    <Phone className="h-6 w-6 text-[#666666] group-hover:text-white" />
+                  <div className="bg-[#FDECE3] hover:bg-[#9a6b43] p-6 flex items-center justify-center group transition-colors">
+                    <Phone className="h-6 w-6 text-[#666666] group-hover:text-white transition-colors" />
                   </div>
 
                   <div>
@@ -393,8 +443,8 @@ const ContactPage = () => {
 
                 {/* Email */}
                 <div className="flex items-start gap-6">
-                  <div className="bg-[#FDECE3] hover:bg-[#9a6b43] p-6 flex items-center justify-center group">
-                    <Mail className="h-6 w-6 text-[#666666] group-hover:text-white" />
+                  <div className="bg-[#FDECE3] hover:bg-[#9a6b43] p-6 flex items-center justify-center group transition-colors ">
+                    <Mail className="h-6 w-6 text-[#666666] group-hover:text-white transition-colors" />
                   </div>
 
                   <div>
@@ -409,8 +459,8 @@ const ContactPage = () => {
 
                 {/* Address */}
                 <div className="flex items-start gap-6">
-                  <div className="bg-[#FDECE3] hover:bg-[#9a6b43] p-6 flex items-center justify-center group">
-                    <MapPin className="h-6 w-6 text-[#666666] group-hover:text-white" />
+                  <div className="bg-[#FDECE3] hover:bg-[#9a6b43] p-6 flex items-center justify-center group transition-colors">
+                    <MapPin className="h-6 w-6 text-[#666666] group-hover:text-white transition-colors" />
                   </div>
 
                   <div>
@@ -430,6 +480,7 @@ const ContactPage = () => {
         {/* Map Section */}
         <div className="w-full h-[500px] mb-6">
           <iframe
+            title="Hotel Location"
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1735.424996912345!2d75.84705593557186!3d25.13767001586691!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396f84e6b0488a05%3A0xf2bc203402ba2d82!2sHotel%20The%20Pride!5e1!3m2!1sen!2sin!4v1743173835894!5m2!1sen!2sin"
             width="100%"
             height="100%"

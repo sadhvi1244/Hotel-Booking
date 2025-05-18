@@ -247,18 +247,21 @@ const RoomDetailPage = () => {
                     <h2 className="text-xl sm:text-2xl xl:text-3xl font-['Playfair_Display'] mb-4 sm:mb-6 text-center lg:text-left font-medium">
                       Room Facilities
                     </h2>
-                    <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
                       {room.amenities.map((amenity, index) => (
                         <div
                           key={index}
-                          className="flex items-center justify-center sm:justify-start gap-3 sm:gap-4 p-3 sm:p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300"
+                          className="flex items-center gap-3 sm:gap-4 px-4 py-3 sm:p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300"
                         >
-                          <img
-                            src={room.amenityIcons[amenity]}
-                            alt={amenity}
-                            className="w-8 h-8 sm:w-10 sm:h-10 object-contain flex-shrink-0"
-                          />
-                          <span className="text-gray-700 text-sm sm:text-base md:text-lg font-medium text-center sm:text-left leading-tight">
+                          <div className="flex-shrink-0">
+                            <img
+                              src={room.amenityIcons[amenity]}
+                              alt={amenity}
+                              className="w-8 h-8 sm:w-10 sm:h-10 object-contain"
+                            />
+                          </div>
+                          <span className="text-gray-700 text-sm sm:text-base md:text-lg font-medium leading-tight">
                             {amenity}
                           </span>
                         </div>
