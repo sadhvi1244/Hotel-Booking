@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import room1 from "../../assets/room-service1.png";
 import room2 from "../../assets/room-service2.png";
 import room3 from "../../assets/room-service3.png";
+import design from "/src/assets/desing.png";
 
 const rooms = [
   {
@@ -50,9 +51,9 @@ function LuxuryRooms() {
           transition={{ duration: 0.6 }}
         >
           <div className="flex justify-center items-center gap-2 text-[#B4916C] uppercase tracking-[0.2em] text-sm">
-            <img src="src/assets/desing.png" alt="left design" className="" />
+            <img src={design} alt="left design" className="" />
             <span>Customer Services</span>
-            <img src="src/assets/desing.png" alt="right design" className="" />
+            <img src={design} alt="right design" className="" />
           </div>
 
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif mt-4 text-[#2C2C2C] leading-tight">
