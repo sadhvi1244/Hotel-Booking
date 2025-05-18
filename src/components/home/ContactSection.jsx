@@ -13,6 +13,8 @@ import { Input } from "../ui/Input";
 import { Textarea } from "../ui/Textarea";
 import { Button } from "../ui/Button";
 import design from "/src/assets/desing.png";
+import bgimg from "../../assets/bgimg.png";
+
 const roomTypes = ["Standard Room", "Executive Room", "Business Suite"];
 const mealPlans = ["Continental Plan (inc. Bf)", "European Plan (only stay) "];
 
@@ -192,7 +194,7 @@ const ContactSection = () => {
   return (
     <div ref={ref} className="relative min-h-screen bg-[#f8f8f8]">
       {/* Background Image */}
-      <div className="hidden md:block absolute inset-0 w-full lg:w-1/2 h-full">
+      <div className="hidden md:block absolute inset-0 w-full lg:w-2/3 h-full">
         <img
           src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
           alt="Luxury hotel room"
@@ -203,7 +205,7 @@ const ContactSection = () => {
       <div className="hidden md:block absolute inset-y-0 right-0 w-1/2 h-full">
         <div className="relative w-full h-full">
           <img
-            src="/src/assets/bgimg.png"
+            src={bgimg}
             alt="Right background"
             className="w-full h-full object-cover"
           />
@@ -231,7 +233,7 @@ const ContactSection = () => {
             </div>
 
             {/* Contact Form */}
-            <div className="bg-white p-6 sm:p-8 md:p-12 rounded-none shadow-sm lg:relative lg:left-[600px]">
+            <div className="bg-white p-6 sm:p-8 md:p-12 rounded-none shadow-sm lg:relative lg:left-[750px]">
               <div className="text-center mb-8">
                 <div className="flex items-center justify-center gap-4 mb-2">
                   <img src={design} alt="Design" className="p-1" />
@@ -397,12 +399,11 @@ const ContactSection = () => {
 
             {/* Desktop Contact Info */}
 
-            <div className="hidden lg:block absolute left-[386px] bottom-32 bg-black/90 p-8  max-w-[320px]">
+            <div className="hidden lg:block absolute right-[-150px] bottom-32 bg-black/90 p-6  max-w-[500px]">
               <div className="flex flex-col items-start gap-5">
                 <div>
                   <svg
-                    width="51"
-                    height="51"
+                    className="w-10 h-10"
                     viewBox="0 0 51 51"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
